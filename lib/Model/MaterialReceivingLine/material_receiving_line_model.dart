@@ -20,40 +20,40 @@ class TableDataPara {
 
 class TableData {
   String plant;
-  String ruN_CARD; // ignore: non_constant_identifier_names
+  String runCard;
+  String ticketSn;
   String operation;
-  int qty;
-  String tickeT_SN; // ignore: non_constant_identifier_names
-  String mT_SN; // ignore: non_constant_identifier_names
-  int fW_COUNT; // ignore: non_constant_identifier_names
-  String createD_DD; // ignore: non_constant_identifier_names
-  String createD_U_ID; // ignore: non_constant_identifier_names
+  double qty;
+  String createdDd;
+  String createdUId;
+  String mtSn;
+  double fwCount;
 
   // 构造函数
   TableData({
     this.plant = "",
-    this.ruN_CARD = "", // ignore: non_constant_identifier_names
-    this.operation = "", // ignore: non_constant_identifier_names
+    this.runCard = "",
+    this.ticketSn = "",
+    this.operation = "",
     this.qty = 0,
-    this.tickeT_SN = "", // ignore: non_constant_identifier_names
-    this.mT_SN = "", // ignore: non_constant_identifier_names
-    this.fW_COUNT = 0, // ignore: non_constant_identifier_names
-    this.createD_DD = "", // ignore: non_constant_identifier_names
-    this.createD_U_ID = "", // ignore: non_constant_identifier_names
+    this.createdDd = "",
+    this.createdUId = "",
+    this.mtSn = "",
+    this.fwCount = 0,
   });
 
   // 添加 toJson 方法
   Map<String, dynamic> toJson() {
     return {
       'plant': plant,
-      'ruN_CARD': ruN_CARD,
+      'runCard': runCard,
+      'ticketSn': ticketSn,
       'operation': operation,
       'qty': qty,
-      'tickeT_SN': tickeT_SN,
-      'mT_SN': mT_SN,
-      'fW_COUNT': fW_COUNT,
-      'createD_DD': createD_DD,
-      'createD_U_ID': createD_U_ID,
+      'createdDd': createdDd,
+      'createdUId': createdUId,
+      'mtSn': mtSn,
+      'fwCount': fwCount,
     };
   }
 
@@ -61,14 +61,14 @@ class TableData {
   factory TableData.fromJson(Map<String, dynamic> json) {
     return TableData(
       plant: json['plant'],
-      ruN_CARD: json['ruN_CARD'],
+      runCard: json['runCard'],
+      ticketSn: json['ticketSn'],
       operation: json['operation'],
       qty: json['qty'],
-      tickeT_SN: json['tickeT_SN'],
-      mT_SN: json['mT_SN'],
-      fW_COUNT: json['fW_COUNT'],
-      createD_DD: json['createD_DD'],
-      createD_U_ID: json['createD_U_ID'],
+      createdDd: json['createdDd'],
+      createdUId: json['createdUId'],
+      mtSn: json['mtSn'],
+      fwCount: json['fwCount'],
     );
   }
 }

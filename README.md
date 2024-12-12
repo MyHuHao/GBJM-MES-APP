@@ -20,12 +20,12 @@ flutter pub get
 ## 删除
 flutter clean
 ## 发布测试apk
-flutter build apk --flavor dev --dart-define=FLAVOR=dev --release
-flutter build apk --flavor dev --dart-define=FLAVOR=dev --release --build-name=1.0.0 --build-number=0
+flutter build apk --flavor Testing --dart-define=FLAVOR=Testing --release
+flutter build apk --flavor Testing --dart-define=FLAVOR=Testing --release --build-name=1.0.0 --build-number=0
 
 ## 发布正式apk
-flutter build apk --flavor staging --dart-define=FLAVOR=staging --release
-flutter build apk --flavor staging --dart-define=FLAVOR=staging --release --build-name=1.0.0 --build-number=0
+flutter build apk --flavor Production --dart-define=FLAVOR=Production --release
+flutter build apk --flavor Production --dart-define=FLAVOR=Production --release --build-name=1.0.0 --build-number=0
 
 
 ## 更新app图标
@@ -40,14 +40,14 @@ keytool -genkey -v -keystore android/app/key/release-key.jks -keyalg RSA -keysiz
 import 'package:flutter/material.dart';
 import 'package:mesapp/Service/Route/navigation_service.dart';
 
-class TextPage extends StatefulWidget {
-  const TextPage({super.key});
+class LoadingCarPage extends StatefulWidget {
+  const LoadingCarPage({super.key});
 
   @override
-  TextPageState createState() => TextPageState();
+  LoadingCarPageState createState() => LoadingCarPageState();
 }
 
-class TextPageState extends State<TextPage> {
+class LoadingCarPageState extends State<LoadingCarPage> {
   final _formKey = GlobalKey<FormState>();
   final _valueController = TextEditingController();
   final _valueKey = GlobalKey<FormFieldState>();
@@ -67,20 +67,33 @@ class TextPageState extends State<TextPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('测试'),
+        backgroundColor: Colors.white,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: _returnPage,
+          icon: const Icon(Icons.arrow_back, color: Colors.black),
+          onPressed: () {
+            _returnPage();
+          },
         ),
+        title: const Text(
+          '料车装载',
+          style: TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.w600),
+        ),
+        elevation: 0.5,
       ),
+      backgroundColor: Colors.white,
       body: Form(
         key: _formKey,
+        autovalidateMode: AutovalidateMode.disabled,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
           child: Column(
             children: [
               const SizedBox(height: 10),
               _buildTextFormField(),
+              const SizedBox(height: 15),
+              Expanded(
+                child: _buildListCard(), // 用 Expanded 包裹列表
+              ),
             ],
           ),
         ),
@@ -134,11 +147,31 @@ class TextPageState extends State<TextPage> {
     );
   }
 
+  Widget _buildListCard() {
+    return ListView.builder(
+      itemCount: 10,
+      itemBuilder: (context, index) {
+        return Card(
+          margin: const EdgeInsets.only(bottom: 10),
+          child: ListTile(
+            title: Text('料车编号：$index'),
+            subtitle: Text('料车状态：已装载'),
+            trailing: IconButton(
+              icon: const Icon(Icons.delete),
+              onPressed: () {
+                // 删除料车
+              },
+            ),
+          ),
+        );
+      },
+    );
+  }
+
   void _returnPage() {
     NavigationService().goBack();
   }
 }
-
 ```
 
 

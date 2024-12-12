@@ -50,22 +50,6 @@ class LoginPara {
   }
 }
 
-class LoginData {
-  String token;
-  UserInfo user;
-
-  // 添加构造函数
-  LoginData({this.token = "", this.user = const UserInfo()});
-
-  // 添加 toJson 方法
-  Map<String, dynamic> toJson() {
-    return {
-      'token': token,
-      'user': user.toJson(),
-    };
-  }
-}
-
 class UserInfo {
   final String accId;
   final String accName;

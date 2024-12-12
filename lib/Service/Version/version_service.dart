@@ -9,9 +9,11 @@ class VersionService with ChangeNotifier {
   Future<VersionInfo> getVersionUpdate(String id) async {
     VersionInfo versionInfo = VersionInfo();
     try {
-      final response = await DioHelper.get(AppConfig.baseUrl, '/Login/GetVersionUpdate/$id', requiresToken: false);
-      final res = response.data;
-      versionInfo = VersionInfo.fromJson(res['data']);
+      final response = await DioHelper.get(AppConfig.baseUrl, '/AppUpdate/GetVersionInfo/$id', requiresToken: false);
+      if (response.statusCode == 200) {
+        final res = response.data;
+        versionInfo = VersionInfo.fromJson(res['data']);
+      }
       return versionInfo;
     } catch (e) {
       Fluttertoast.showToast(msg: e.toString());

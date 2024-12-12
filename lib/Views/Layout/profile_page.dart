@@ -222,7 +222,7 @@ class ProfilePageState extends State<ProfilePage> {
     // 这里添加打开更新页面的逻辑，比如跳转到更新页面等
     // 以下是简单的示例，假设跳转到更新页面
     String appUrl = AppConfig.baseUrl;
-    String url = "$appUrl/Download/DownloadUpdateApk/$name";
+    String url = "$appUrl/AppUpdate/DownloadUpdateApk/$name";
     bool result = await DialogUtil.showOkCancelConfirmDialog('提示', "更新系统将自动更新 \n 当前版本: $name \n 当前下载服务器 $appUrl \n 下载URL $url \n 请确认是否更新");
     if (result == true) {
       _appUpdate(url);

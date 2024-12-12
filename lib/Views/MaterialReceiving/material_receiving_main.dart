@@ -31,7 +31,6 @@ class MaterialReceivingPageState extends State<MaterialReceivingPage> with Widge
 
   @override
   void initState() {
-    super.initState();
     WidgetsBinding.instance.addObserver(this);
     // 获取当前登录账户信息
     final userInfoPreference = UserInfoPreference();
@@ -47,6 +46,7 @@ class MaterialReceivingPageState extends State<MaterialReceivingPage> with Widge
         _loadMoreData();
       }
     });
+    super.initState();
   }
 
   @override

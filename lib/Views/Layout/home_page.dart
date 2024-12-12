@@ -49,8 +49,6 @@ class HomePageState extends State<HomePage> {
           children: <Widget>[
             _buildHintCard(),
             const SizedBox(height: 10),
-            // _buildFeatureCard(),
-            // const SizedBox(height: 10),
             _buildListCard(),
           ],
         ),
@@ -77,10 +75,9 @@ class HomePageState extends State<HomePage> {
             ),
             const SizedBox(height: 5),
             Text(
-              '今天是$date',
+              '日期：$date ',
               style: const TextStyle(fontSize: 12),
             ),
-            // ，天气${weatherData.weather}，气温${weatherData.temperature}摄氏度。
           ],
         ),
       ),

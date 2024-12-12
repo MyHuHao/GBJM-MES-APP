@@ -5,6 +5,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mesapp/Config/app_config.dart';
 import 'package:mesapp/Model/Auth/auth_model.dart';
 import 'package:mesapp/Model/Dictionary/dictionary_model.dart';
+import 'package:mesapp/Model/Login/login_model.dart';
 import 'package:mesapp/Preference/auth_preference.dart';
 import 'package:mesapp/Preference/login_preference.dart';
 import 'package:mesapp/Route/app_routes.dart';
@@ -293,10 +294,11 @@ class LoginPageState extends State<LoginPage> {
     if (_formKey.currentState?.validate() ?? false) {
       try {
         EasyLoading.show(status: '登录中...');
-        final result = await context.read<LoginService>().login(
-              _usernameController.text,
-              _passwordController.text,
-            );
+        LoginPara para = LoginPara(
+          account: _usernameController.text,
+          passWord: _passwordController.text,
+        );
+        final result = await context.read<LoginService>().login(para);
         EasyLoading.dismiss();
         if (result.msgCode != '0') {
           EasyLoading.showToast('登录失败：${result.msg}');

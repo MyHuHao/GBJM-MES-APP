@@ -207,14 +207,14 @@ class MaterialReceivingLinePageState extends State<MaterialReceivingLinePage> wi
                 child: ListTile(
                     contentPadding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
                     title: Text(
-                      "流程卡号: ${_items[index].ruN_CARD}",
+                      "流程卡号: ${_items[index].runCard}",
                       style: const TextStyle(
                         color: Colors.black87,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
                     subtitle: Text(
-                      "创建时间: ${_items[index].createD_DD}",
+                      "创建时间: ${_items[index].createdDd}",
                       style: const TextStyle(color: Colors.grey),
                     ),
                     trailing: const Icon(Icons.arrow_forward_ios, color: Colors.grey, size: 16),
@@ -262,13 +262,13 @@ class MaterialReceivingLinePageState extends State<MaterialReceivingLinePage> wi
                                     child: ListView(
                                       children: [
                                         _buildLabel('工厂', _items[index].plant),
-                                        _buildLabel('流程卡号', _items[index].ruN_CARD),
+                                        _buildLabel('流程卡号', _items[index].runCard),
                                         _buildLabel('工序', _items[index].operation),
                                         _buildLabel('数量', _items[index].qty.toString()),
-                                        _buildLabel('计件单', _items[index].tickeT_SN),
-                                        _buildLabel('线检单', _items[index].mT_SN),
-                                        _buildLabel('创建人', _items[index].createD_U_ID),
-                                        _buildLabel('创建时间', _items[index].createD_DD),
+                                        _buildLabel('计件单', _items[index].ticketSn),
+                                        _buildLabel('线检单', _items[index].mtSn),
+                                        _buildLabel('创建人', _items[index].createdUId),
+                                        _buildLabel('创建时间', _items[index].createdDd),
                                       ],
                                     ),
                                   ),

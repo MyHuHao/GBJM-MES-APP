@@ -8,7 +8,7 @@ class MaterialReceivingLineService with ChangeNotifier {
   Future<ApiResult<ListResult<TableData>>> getTableData(TableDataPara para) async {
     ApiResult<ListResult<TableData>> result = ApiResult<ListResult<TableData>>();
     try {
-      final response = await DioHelper.post(AppConfig.baseUrl, '/Sandblasting/GetQCTransferLogData', data: para, requiresToken: false);
+      final response = await DioHelper.post(AppConfig.baseUrl, '/MaterialReceivingLine/GetQCTransferLogData', data: para, requiresToken: false);
       if (response.statusCode == 200) {
         final res = response.data;
         result.msgCode = res['msgCode'];

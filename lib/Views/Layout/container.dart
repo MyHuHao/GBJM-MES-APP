@@ -38,7 +38,6 @@ class ContainerPageState extends State<ContainerPage> {
 
   @override
   void initState() {
-    super.initState();
     _initPackageInfo();
     GlobalTimer().startTimer(() async {
       VersionInfo result = await context.read<VersionService>().getVersionUpdate(AppConfig.appConfig);
@@ -46,6 +45,7 @@ class ContainerPageState extends State<ContainerPage> {
         _updateApp(result.name);
       }
     });
+    super.initState();
   }
 
   @override
@@ -54,11 +54,28 @@ class ContainerPageState extends State<ContainerPage> {
     super.dispose();
   }
 
+  // 获取版本信息
   Future<void> _initPackageInfo() async {
     final info = await PackageInfo.fromPlatform();
     setState(() {
       packageInfo = info;
     });
+  }
+
+  Future<void> _updateApp(String name) async {
+    GlobalTimer().stopTimer();
+    String appUrl = AppConfig.baseUrl;
+    String url = "$appUrl/AppUpdate/DownloadUpdateApk/$name";
+    bool result = await DialogUtil.showOkConfirmDialog('提示', "更新系统将自动更新 \n 当前版本: $name \n 当前下载服务器 $appUrl \n 下载URL $url \n 请确认是否更新");
+    if (result == true) {
+      UpdateModel model = UpdateModel(
+        url,
+        "flutterUpdate.apk",
+        "ic_launcher",
+        '',
+      );
+      AzhonAppUpdate.update(model);
+    }
   }
 
   @override
@@ -86,30 +103,12 @@ class ContainerPageState extends State<ContainerPage> {
             iconSize: 20,
             selectedItemColor: Colors.blue, // 选中时的颜色
             unselectedItemColor: Colors.black, // 未选中时的颜色
-            onTap: _onItemTapped,
+            onTap: (int index) {
+              setState(() {
+                _selectedIndex = index;
+              });
+            },
           ),
         ));
-  }
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
-
-  Future<void> _updateApp(String name) async {
-    GlobalTimer().stopTimer();
-    String appUrl = AppConfig.baseUrl;
-    String url = "$appUrl/Download/DownloadUpdateApk/$name";
-    bool result = await DialogUtil.showOkConfirmDialog('提示', "更新系统将自动更新 \n 当前版本: $name \n 当前下载服务器 $appUrl \n 下载URL $url \n 请确认是否更新");
-    if (result == true) {
-      UpdateModel model = UpdateModel(
-        url,
-        "flutterUpdate.apk",
-        "ic_launcher",
-        '',
-      );
-      AzhonAppUpdate.update(model);
-    }
   }
 }
