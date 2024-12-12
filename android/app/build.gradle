@@ -1,0 +1,95 @@
+plugins {
+    id "com.android.application"
+    id "kotlin-android"
+    // The Flutter Gradle Plugin must be applied after the Android and Kotlin Gradle plugins.
+    id "dev.flutter.flutter-gradle-plugin"
+}
+
+def keystorePropertiesFile = rootProject.file("key.properties")
+def keystoreProperties = new Properties()
+keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+
+android {
+    namespace = "com.example.mesapp"
+    compileSdk = flutter.compileSdkVersion
+    ndkVersion = flutter.ndkVersion
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8
+    }
+
+    defaultConfig {
+        // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
+        applicationId = "com.example.mesapp"
+        // You can update the following values to match your application needs.
+        // For more information, see: https://flutter.dev/to/review-gradle-config.
+        minSdk = flutter.minSdkVersion
+        targetSdk = flutter.targetSdkVersion
+        versionCode = flutter.versionCode.toInteger()
+        versionName = flutter.versionName
+    }
+
+    signingConfigs {
+        release {
+            keyAlias keystoreProperties['keyAlias']
+            keyPassword keystoreProperties['keyPassword']
+            storeFile file(keystoreProperties['storeFile'])
+            storePassword keystoreProperties['storePassword']
+        }
+    }
+
+
+    buildTypes {
+        release {
+            signingConfig signingConfigs.release
+        }
+    }
+
+
+    flavorDimensions "environment"
+
+    productFlavors {
+        dev {
+            dimension "environment"
+            applicationIdSuffix ".dev"
+            versionNameSuffix "-dev"
+        }
+        staging {
+            dimension "environment"
+            applicationIdSuffix ".staging"
+            versionNameSuffix "-staging"
+        }
+    }
+
+    applicationVariants.all { variant ->
+        variant.outputs.all {
+            // 获取版本号
+            def versionName = variant.versionName
+            def flavor = variant.flavorName ?: 'dev'  // 获取 flavor（如有）
+            def buildType = variant.buildType.name  // 获取构建类型（debug 或 release）
+
+            // 设置新的文件名：app-版本号-flavor-buildType.apk
+            outputFileName = "mes-${flavor}-${versionName}-${buildType}.apk"
+            println("versionCode: ${variant.versionCode}")
+            println("versionName: ${variant.versionName}")
+            println("Generated APK file: ${outputFileName}")
+
+            // 可选：根据构建类型设置文件名规则
+            if (buildType == "debug") {
+                outputFileName = "mes-${flavor}_${versionName}_release.apk"
+            }
+            if (buildType == "release") {
+                outputFileName = "mes-${flavor}_${versionName}_release.apk"
+            }
+        }
+    }
+}
+
+flutter {
+    source = "../.."
+}
