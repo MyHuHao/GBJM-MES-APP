@@ -23,11 +23,11 @@ class TableData {
   String runCard;
   String ticketSn;
   String operation;
-  double qty;
+  int qty;
   String createdDd;
   String createdUId;
   String mtSn;
-  double fwCount;
+  int fwCount;
 
   // 构造函数
   TableData({
