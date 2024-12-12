@@ -54,15 +54,20 @@ android {
     flavorDimensions "environment"
 
     productFlavors {
-        dev {
+        Developer {
             dimension "environment"
-            applicationIdSuffix ".dev"
-            versionNameSuffix "-dev"
+            applicationIdSuffix ".developer"
+            versionNameSuffix "-developer"
         }
-        staging {
+        Testing {
             dimension "environment"
-            applicationIdSuffix ".staging"
-            versionNameSuffix "-staging"
+            applicationIdSuffix ".testing"
+            versionNameSuffix "-testing"
+        }
+        Production {
+            dimension "environment"
+            applicationIdSuffix ".production"
+            versionNameSuffix "-production"
         }
     }
 
@@ -70,14 +75,11 @@ android {
         variant.outputs.all {
             // 获取版本号
             def versionName = variant.versionName
-            def flavor = variant.flavorName ?: 'dev'  // 获取 flavor（如有）
+            def flavor = variant.flavorName ?: 'developer'  // 获取 flavor（如有）
             def buildType = variant.buildType.name  // 获取构建类型（debug 或 release）
 
             // 设置新的文件名：app-版本号-flavor-buildType.apk
             outputFileName = "mes-${flavor}-${versionName}-${buildType}.apk"
-            println("versionCode: ${variant.versionCode}")
-            println("versionName: ${variant.versionName}")
-            println("Generated APK file: ${outputFileName}")
 
             // 可选：根据构建类型设置文件名规则
             if (buildType == "debug") {
