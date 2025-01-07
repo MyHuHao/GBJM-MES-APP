@@ -332,7 +332,7 @@ class MaterialReceivingAssemblyPageState extends State<MaterialReceivingAssembly
     TableDataPara para = TableDataPara(
       plant: "DG",
       runCard: "",
-      operationList: ['500','501','502'],
+      operationList: ['327','537'],
       page: _page + 1,
       pageSize: 15,
     );

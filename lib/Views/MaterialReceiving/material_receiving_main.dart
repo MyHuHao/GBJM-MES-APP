@@ -332,7 +332,7 @@ class MaterialReceivingPageState extends State<MaterialReceivingPage> with Widge
     TableDataPara para = TableDataPara(
       plant: "DG",
       runCard: "",
-      operationList: ['319', '318'],
+      operationList: ['319', '318', '325'],
       page: _page + 1,
       pageSize: 15,
     );
