@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:mesapp/Views/Layout/container.dart';
 import 'package:mesapp/Views/Login/login_main.dart';
 import 'package:mesapp/Views/MaterialReceiving/material_receiving_main.dart';
-import 'package:mesapp/Views/MaterialReceivingAssembly/material_receiving_assembly.dart';
+import 'package:mesapp/Views/MaterialReceivingAssembly/material_receiving_assembly_main.dart';
 import 'package:mesapp/Views/MaterialReceivingLine/material_receiving_line_main.dart';
-import 'package:mesapp/Views/MaterialReceivingWelding/material_receiving_welding.dart';
+import 'package:mesapp/Views/MaterialReceivingShockEngines/material_receiving_welding_main.dart';
+import 'package:mesapp/Views/MaterialReceivingWelding/material_receiving_welding_main.dart';
 import 'package:mesapp/Widgets/scan_widget.dart';
 
 
@@ -16,6 +17,7 @@ class AppRoutes {
   static const String materialReceivingLine = '/materialReceivingLine';
   static const String materialReceivingAssembly = '/materialReceivingAssembly';
   static const String materialReceivingWelding = '/materialReceivingWelding';
+  static const String materialReceivingShockEngines = '/materialReceivingShockEngines';
 
 
 
@@ -27,5 +29,6 @@ class AppRoutes {
     materialReceivingLine: (context) => const MaterialReceivingLinePage(),
     materialReceivingAssembly: (context) => const MaterialReceivingAssemblyPage(),
     materialReceivingWelding: (context) => const MaterialReceivingWeldingPage(),
+    materialReceivingShockEngines: (context) => const MaterialReceivingShockEnginesPage(),
   };
 }
