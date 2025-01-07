@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_app_update/flutter_app_update.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mesapp/Config/app_config.dart';
@@ -11,6 +12,7 @@ import 'package:mesapp/Preference/login_preference.dart';
 import 'package:mesapp/Route/app_routes.dart';
 import 'package:mesapp/Service/Login/login_service.dart';
 import 'package:mesapp/Service/Route/navigation_service.dart';
+import 'package:mesapp/Service/Version/version_service.dart';
 import 'package:mesapp/Widgets/adaptive_dialog.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
@@ -273,7 +275,10 @@ class LoginPageState extends State<LoginPage> {
           String mesUrl = AppConfig.mesUrl;
 
           String version = packageInfo.version;
-          await DialogUtil.showOkConfirmDialog('提示', '后端地址：$baseUrl \n配置文件：$appConfig \nMES地址：$mesUrl \n版本：$version');
+          bool result =  await DialogUtil.showOkConfirmDialog('提示', '后端地址：$baseUrl \n配置文件：$appConfig \nMES地址：$mesUrl \n版本：$version');
+          if (result == true) {
+            _getVersion();
+          }
         },
         child: Text(
           text,
@@ -336,5 +341,32 @@ class LoginPageState extends State<LoginPage> {
     Fluttertoast.showToast(msg: '再按一次退出应用');
     Future.delayed(const Duration(seconds: 2), () => _exitFlag = 0);
     return false;
+  }
+
+  Future<void> _getVersion() async {
+    VersionInfo result = await context.read<VersionService>().getVersionUpdate(AppConfig.appConfig);
+    if (result.push.isNotEmpty && result.version != packageInfo.version) {
+      _openUpdatePage(result.name);
+    }
+  }
+
+  Future<void> _openUpdatePage(String name) async {
+    // 这里添加打开更新页面的逻辑，比如跳转到更新页面等
+    // 以下是简单的示例，假设跳转到更新页面
+    String appUrl = AppConfig.baseUrl;
+    String url = "$appUrl/AppUpdate/DownloadUpdateApk/$name";
+    bool result = await DialogUtil.showOkCancelConfirmDialog('提示', "更新系统将自动更新 \n 当前版本: $name \n 当前下载服务器 $appUrl \n 下载URL $url \n 请点击确认更新");
+    if (result == true) {
+      _appUpdate(url);
+    }
+  }
+  _appUpdate(String url) {
+    UpdateModel model = UpdateModel(
+      url,
+      "flutterUpdate.apk",
+      "ic_launcher",
+      '',
+    );
+    AzhonAppUpdate.update(model);
   }
 }

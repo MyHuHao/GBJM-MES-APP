@@ -66,7 +66,7 @@ class ContainerPageState extends State<ContainerPage> {
     GlobalTimer().stopTimer();
     String appUrl = AppConfig.baseUrl;
     String url = "$appUrl/AppUpdate/DownloadUpdateApk/$name";
-    bool result = await DialogUtil.showOkConfirmDialog('提示', "更新系统将自动更新 \n 当前版本: $name \n 当前下载服务器 $appUrl \n 下载URL $url \n 请确认是否更新");
+    bool result = await DialogUtil.showOkConfirmDialog('提示', "更新系统将自动更新 \n 当前版本: $name \n 当前下载服务器 $appUrl \n 下载URL $url \n 请点击确认更新");
     if (result == true) {
       UpdateModel model = UpdateModel(
         url,
