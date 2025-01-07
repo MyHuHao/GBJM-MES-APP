@@ -139,14 +139,14 @@ class MaterialReceivingLinePageState extends State<MaterialReceivingLinePage> wi
                 borderRadius: BorderRadius.circular(8.0),
                 borderSide: const BorderSide(color: Colors.blue, width: 2.0), // 聚焦时的边框
               ),
-              hintText: '请输入流程卡号',
+              hintText: '请输入流程卡/线检号',
               hintStyle: TextStyle(color: Colors.grey[500]),
               prefixIcon: const Icon(Icons.qr_code, color: Colors.grey), // 左侧图标
               contentPadding: const EdgeInsets.symmetric(vertical: 14.0, horizontal: 16.0),
             ),
             validator: (value) {
               if (value == null || value.isEmpty) {
-                return '卡号不能为空';
+                return '流程卡/线检号不能为空';
               }
               return null;
             },

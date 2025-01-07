@@ -10,14 +10,14 @@ import 'package:mesapp/Service/Route/navigation_service.dart';
 import 'package:mesapp/Widgets/adaptive_dialog.dart';
 import 'package:provider/provider.dart';
 
-class MaterialReceivingPage extends StatefulWidget {
-  const MaterialReceivingPage({super.key});
+class MaterialReceivingAssemblyPage extends StatefulWidget {
+  const MaterialReceivingAssemblyPage({super.key});
 
   @override
-  MaterialReceivingPageState createState() => MaterialReceivingPageState();
+  MaterialReceivingAssemblyPageState createState() => MaterialReceivingAssemblyPageState();
 }
 
-class MaterialReceivingPageState extends State<MaterialReceivingPage> with WidgetsBindingObserver {
+class MaterialReceivingAssemblyPageState extends State<MaterialReceivingAssemblyPage> with WidgetsBindingObserver {
   final _formKey = GlobalKey<FormState>();
   final _valueController = TextEditingController();
   final _valueKey = GlobalKey<FormFieldState>();
@@ -74,7 +74,7 @@ class MaterialReceivingPageState extends State<MaterialReceivingPage> with Widge
   @override
   Widget build(BuildContext context) {
     return PopScope(
-        // 禁用普通的返回行为
+      // 禁用普通的返回行为
         canPop: false,
         // 自定义返回键行为
         onPopInvokedWithResult: (bool didPop, Object? result) {
@@ -93,7 +93,7 @@ class MaterialReceivingPageState extends State<MaterialReceivingPage> with Widge
               },
             ),
             title: const Text(
-              '转料到站-喷砂/水砂',
+              '转料到站-组装',
               style: TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.w600),
             ),
             elevation: 0.5,
@@ -139,7 +139,7 @@ class MaterialReceivingPageState extends State<MaterialReceivingPage> with Widge
                 borderRadius: BorderRadius.circular(8.0),
                 borderSide: const BorderSide(color: Colors.blue, width: 2.0), // 聚焦时的边框
               ),
-              hintText: '请输入流程卡号/线检/喷砂卡号',
+              hintText: '请输入流程卡号/线检/组装卡号',
               hintStyle: TextStyle(color: Colors.grey[500]),
               prefixIcon: const Icon(Icons.qr_code, color: Colors.grey), // 左侧图标
               contentPadding: const EdgeInsets.symmetric(vertical: 14.0, horizontal: 16.0),
@@ -332,7 +332,7 @@ class MaterialReceivingPageState extends State<MaterialReceivingPage> with Widge
     TableDataPara para = TableDataPara(
       plant: "DG",
       runCard: "",
-      operationList: ['319', '318'],
+      operationList: ['500','501','502'],
       page: _page + 1,
       pageSize: 15,
     );
@@ -363,11 +363,11 @@ class MaterialReceivingPageState extends State<MaterialReceivingPage> with Widge
         List<String> strList = value.split(';');
         Map<String, dynamic> form = {};
         if (strList.length == 12) {
-          form = {'OperationGroup': '水抛', 'RUN_CARD': strList[0], 'QTY': strList[1], 'TICKET_SN': strList[5], 'PLANT': "DG", 'INSPECTOR': accId};
+          form = {'OperationGroup': '组装', 'RUN_CARD': strList[0], 'QTY': strList[1], 'TICKET_SN': strList[5], 'PLANT': "DG", 'INSPECTOR': accId};
         } else if (strList.length == 3) {
-          form = {'OperationGroup': '水抛', 'RUN_CARD': strList[0], 'QTY': strList[1], 'TICKET_SN': strList[2], 'PLANT': "DG", 'INSPECTOR': accId};
+          form = {'OperationGroup': '组装', 'RUN_CARD': strList[0], 'QTY': strList[1], 'TICKET_SN': strList[2], 'PLANT': "DG", 'INSPECTOR': accId};
         } else if (strList.length == 1) {
-          form = {'OperationGroup': '水抛', 'RUN_CARD': strList[0], 'QTY': 0, 'TICKET_SN': '', 'PLANT': "DG", 'INSPECTOR': accId};
+          form = {'OperationGroup': '组装', 'RUN_CARD': strList[0], 'QTY': 0, 'TICKET_SN': '', 'PLANT': "DG", 'INSPECTOR': accId};
         } else {
           EasyLoading.dismiss();
           if (context.mounted) {

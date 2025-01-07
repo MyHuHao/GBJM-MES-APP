@@ -1,17 +1,19 @@
 class TableDataPara {
   String plant;
   String runCard;
+  List<String> operationList;
   int page;
   int pageSize;
 
   // 添加构造函数
-  TableDataPara({this.plant = "DG", this.runCard = "", this.page = 1, this.pageSize = 15});
+  TableDataPara({this.plant = "DG", this.runCard = "",this.operationList = const [], this.page = 1, this.pageSize = 15});
 
   // 添加 toJson 方法
   Map<String, dynamic> toJson() {
     return {
       'plant': plant,
       'runCard': runCard,
+      'operationList': operationList,
       'page': page,
       'pageSize': pageSize,
     };
