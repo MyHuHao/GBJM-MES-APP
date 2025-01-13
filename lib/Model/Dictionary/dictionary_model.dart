@@ -18,4 +18,9 @@ final Map<String, String> authEnum = {
   'twtsw': AppRoutes.materialReceivingWelding,
   'twtsa': AppRoutes.materialReceivingAssembly,
   'twtsse': AppRoutes.materialReceivingShockEngines,
+
+  'twtsd': AppRoutes.materialReceivingDrum,
+  'twtsk': AppRoutes.materialReceivingKiyomitsu,
+  'twtsr': AppRoutes.materialReceivingRough,
+  'twtsst': AppRoutes.materialReceivingStamp,
 };
