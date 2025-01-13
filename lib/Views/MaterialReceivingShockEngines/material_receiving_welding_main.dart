@@ -93,7 +93,7 @@ class MaterialReceivingShockEnginesPageState extends State<MaterialReceivingShoc
               },
             ),
             title: const Text(
-              '转料到站-震机',
+              '转料到站-震机 喷砂',
               style: TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.w600),
             ),
             elevation: 0.5,
@@ -139,7 +139,7 @@ class MaterialReceivingShockEnginesPageState extends State<MaterialReceivingShoc
                 borderRadius: BorderRadius.circular(8.0),
                 borderSide: const BorderSide(color: Colors.blue, width: 2.0), // 聚焦时的边框
               ),
-              hintText: '请输入流程卡号/线检/震机卡号',
+              hintText: '请输入',
               hintStyle: TextStyle(color: Colors.grey[500]),
               prefixIcon: const Icon(Icons.qr_code, color: Colors.grey), // 左侧图标
               contentPadding: const EdgeInsets.symmetric(vertical: 14.0, horizontal: 16.0),
@@ -332,7 +332,7 @@ class MaterialReceivingShockEnginesPageState extends State<MaterialReceivingShoc
     TableDataPara para = TableDataPara(
       plant: "DG",
       runCard: "",
-      operationList: ['322', '323', '324', '328', '338'],
+      operationList: ['325','322', '323', '324', '328', '338'],
       page: _page + 1,
       pageSize: 15,
     );
@@ -363,11 +363,11 @@ class MaterialReceivingShockEnginesPageState extends State<MaterialReceivingShoc
         List<String> strList = value.split(';');
         Map<String, dynamic> form = {};
         if (strList.length == 12) {
-          form = {'OperationGroup': '震机', 'RUN_CARD': strList[0], 'QTY': strList[1], 'TICKET_SN': strList[5], 'PLANT': "DG", 'INSPECTOR': accId};
+          form = {'OperationGroup': '震机 喷砂', 'RUN_CARD': strList[0], 'QTY': strList[1], 'TICKET_SN': strList[5], 'PLANT': "DG", 'INSPECTOR': accId};
         } else if (strList.length == 3) {
-          form = {'OperationGroup': '震机', 'RUN_CARD': strList[0], 'QTY': strList[1], 'TICKET_SN': strList[2], 'PLANT': "DG", 'INSPECTOR': accId};
+          form = {'OperationGroup': '震机 喷砂', 'RUN_CARD': strList[0], 'QTY': strList[1], 'TICKET_SN': strList[2], 'PLANT': "DG", 'INSPECTOR': accId};
         } else if (strList.length == 1) {
-          form = {'OperationGroup': '震机', 'RUN_CARD': strList[0], 'QTY': 0, 'TICKET_SN': '', 'PLANT': "DG", 'INSPECTOR': accId};
+          form = {'OperationGroup': '震机 喷砂', 'RUN_CARD': strList[0], 'QTY': 0, 'TICKET_SN': '', 'PLANT': "DG", 'INSPECTOR': accId};
         } else {
           EasyLoading.dismiss();
           if (context.mounted) {

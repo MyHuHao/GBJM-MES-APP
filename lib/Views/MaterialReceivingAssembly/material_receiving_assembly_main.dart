@@ -139,7 +139,7 @@ class MaterialReceivingAssemblyPageState extends State<MaterialReceivingAssembly
                 borderRadius: BorderRadius.circular(8.0),
                 borderSide: const BorderSide(color: Colors.blue, width: 2.0), // 聚焦时的边框
               ),
-              hintText: '请输入流程卡号/线检/组装卡号',
+              hintText: '请输入',
               hintStyle: TextStyle(color: Colors.grey[500]),
               prefixIcon: const Icon(Icons.qr_code, color: Colors.grey), // 左侧图标
               contentPadding: const EdgeInsets.symmetric(vertical: 14.0, horizontal: 16.0),
@@ -328,11 +328,10 @@ class MaterialReceivingAssemblyPageState extends State<MaterialReceivingAssembly
     setState(() {
       _isLoading = true;
     });
-
     TableDataPara para = TableDataPara(
       plant: "DG",
       runCard: "",
-      operationList: ['327','537'],
+      operationList: ['500','501','503','326','166','536','327'],
       page: _page + 1,
       pageSize: 15,
     );

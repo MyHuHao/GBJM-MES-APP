@@ -93,7 +93,7 @@ class MaterialReceivingPageState extends State<MaterialReceivingPage> with Widge
               },
             ),
             title: const Text(
-              '转料到站-喷砂/水砂',
+              '转料到站-水抛',
               style: TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.w600),
             ),
             elevation: 0.5,
@@ -139,7 +139,7 @@ class MaterialReceivingPageState extends State<MaterialReceivingPage> with Widge
                 borderRadius: BorderRadius.circular(8.0),
                 borderSide: const BorderSide(color: Colors.blue, width: 2.0), // 聚焦时的边框
               ),
-              hintText: '请输入流程卡号/线检/喷砂卡号',
+              hintText: '请输入',
               hintStyle: TextStyle(color: Colors.grey[500]),
               prefixIcon: const Icon(Icons.qr_code, color: Colors.grey), // 左侧图标
               contentPadding: const EdgeInsets.symmetric(vertical: 14.0, horizontal: 16.0),
@@ -332,7 +332,7 @@ class MaterialReceivingPageState extends State<MaterialReceivingPage> with Widge
     TableDataPara para = TableDataPara(
       plant: "DG",
       runCard: "",
-      operationList: ['319', '318', '325'],
+      operationList: ['319', '318'],
       page: _page + 1,
       pageSize: 15,
     );

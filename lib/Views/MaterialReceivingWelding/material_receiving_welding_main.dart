@@ -139,7 +139,7 @@ class MaterialReceivingWeldingPageState extends State<MaterialReceivingWeldingPa
                 borderRadius: BorderRadius.circular(8.0),
                 borderSide: const BorderSide(color: Colors.blue, width: 2.0), // 聚焦时的边框
               ),
-              hintText: '请输入流程卡号/线检/焊接卡号',
+              hintText: '请输入',
               hintStyle: TextStyle(color: Colors.grey[500]),
               prefixIcon: const Icon(Icons.qr_code, color: Colors.grey), // 左侧图标
               contentPadding: const EdgeInsets.symmetric(vertical: 14.0, horizontal: 16.0),
@@ -332,7 +332,7 @@ class MaterialReceivingWeldingPageState extends State<MaterialReceivingWeldingPa
     TableDataPara para = TableDataPara(
       plant: "DG",
       runCard: "",
-      operationList: ['189', '505', '506', '507', '508', '509', '536', '537'],
+      operationList: ['505', '506', '507', '508', '509', '536', '537'],
       page: _page + 1,
       pageSize: 15,
     );
