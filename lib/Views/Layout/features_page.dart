@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:mesapp/Model/Auth/auth_model.dart';
-import 'package:mesapp/Model/Dictionary/dictionary_model.dart';
 import 'package:mesapp/Model/MaterialReceiving/material_receiving_model.dart';
 import 'package:mesapp/Preference/auth_preference.dart';
 import 'package:mesapp/Service/MaterialReceiving/materialreceiving_service.dart';
