@@ -15,12 +15,4 @@ final Map<int, String> materialReceivingEnum = {
 final Map<String, String> authEnum = {
   'qt': AppRoutes.materialReceivingLine,
   'twts': AppRoutes.materialReceiving,
-  'twtsw': AppRoutes.materialReceivingWelding,
-  'twtsa': AppRoutes.materialReceivingAssembly,
-  'twtsse': AppRoutes.materialReceivingShockEngines,
-
-  'twtsd': AppRoutes.materialReceivingDrum,
-  'twtsk': AppRoutes.materialReceivingKiyomitsu,
-  'twtsr': AppRoutes.materialReceivingRough,
-  'twtsst': AppRoutes.materialReceivingStamp,
 };

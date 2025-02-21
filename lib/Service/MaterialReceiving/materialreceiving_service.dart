@@ -49,4 +49,27 @@ class MaterialReceivingService with ChangeNotifier {
       return result;
     }
   }
+
+  Future<List<TransferMaterial>> getTransferMaterialList() async {
+    List<TransferMaterial> result = [];
+    try {
+      final response = await DioHelper.get(AppConfig.baseUrl, '/MaterialReceiving/GetTransferMaterialList', requiresToken: false);
+      final res = response.data;
+      // 添加数据解析逻辑
+      if (res is Map<String, dynamic> && res['msgCode'] == '0') {
+        final data = res['data'] as List<dynamic>?;
+        if (data != null) {
+          result = data.map((item) {
+            return TransferMaterial.fromJson({
+              'name': item['name'],
+              'array': (item['array'] as List<dynamic>).map((e) => e.toString()).toList()
+            });
+          }).toList();
+        }
+      }
+      return result;
+    } catch (e) {
+      return result;
+    }
+  }
 }

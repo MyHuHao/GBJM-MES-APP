@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:mesapp/Model/Auth/auth_model.dart';
-import 'package:mesapp/Model/Dictionary/dictionary_model.dart';
 import 'package:mesapp/Model/Home/home_model.dart';
+import 'package:mesapp/Model/MaterialReceiving/material_receiving_model.dart';
 import 'package:mesapp/Preference/auth_preference.dart';
 import 'package:mesapp/Service/Route/navigation_service.dart';
 import 'package:collection/collection.dart';
+import 'package:provider/provider.dart';
+
+import '../../Service/MaterialReceiving/materialreceiving_service.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -22,6 +25,11 @@ class HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
     _initializeFeaturesList();
   }
 
@@ -111,7 +119,7 @@ class HomePageState extends State<HomePage> {
                 final item = dataList[index];
                 return InkWell(
                   onTap: () {
-                    NavigationService().navigateTo(item['route']);
+                    NavigationService().navigateTo(item['route'], arguments: item);
                   },
                   child: Container(
                     height: 45,
@@ -132,6 +140,16 @@ class HomePageState extends State<HomePage> {
     final AuthPreference authPreference = AuthPreference();
     List<AuthData> list = await authPreference.getAuthList();
 
+    // 新增物料转移数据请求
+    // 新增安全检查
+    if (!mounted) return;
+    List<TransferMaterial> res = await context.read<MaterialReceivingService>().getTransferMaterialList();
+
+    // 定义一个 Map 来存储 Function ID 和对应的路由
+    Map<String, List<String>> menuList = {
+      for (var item in res) item.name.toString(): (item.array as List<dynamic>).map((e) => e.toString()).toList()
+    };
+
     // 使用 groupBy 方法将具有相同 Function ID 的数据分组
     var groupedData = groupBy(
       list,
@@ -139,16 +157,25 @@ class HomePageState extends State<HomePage> {
     );
 
     // 过滤并构建 featuresList
-    featuresList = groupedData.entries
-        .where((entry) => authEnum.containsKey(entry.key)) // 只保留存在于 authEnum 中的 key
-        .map((entry) {
-      var firstItem = entry.value.first;
-      return {
-        'name': firstItem.functionName,
-        'value': entry.key,
-        'route': authEnum[entry.key],
-      };
-    }).toList();
+    featuresList = [
+      // 固定项
+      {"name": "线检转料到站", "value": "qt", "route": "/materialReceivingLine", "array": []},
+      // 动态生成项
+      ...menuList.entries.map((entry) {
+        // 在groupedData中查找匹配当前工序的第一个有效functionId
+        final validId = entry.value.firstWhere(
+          (id) => groupedData.containsKey(id),
+          orElse: () => entry.value.first,
+        );
+
+        return {
+          "name": "${entry.key}转料到站",
+          "value": validId, // 使用实际存在的functionId
+          "route": "/materialReceiving",
+          "array": entry.value
+        };
+      })
+    ];
 
     // 刷新 UI
     setState(() {});

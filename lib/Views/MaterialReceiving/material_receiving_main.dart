@@ -28,6 +28,23 @@ class MaterialReceivingPageState extends State<MaterialReceivingPage> with Widge
   final List<TableData> _items = [];
   int _page = 0;
   bool _isLoading = false;
+  Map<String, dynamic>? _args;
+  List<String> _operationList = []; // 新增用于存储工序列表的变量
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // 在此处获取路由参数
+    _args = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+    if (_args != null) {
+      // 从参数中获取工序列表
+      _operationList = (_args!['array'] as List<dynamic>?)?.cast<String>() ?? [];
+      if (_operationList.isNotEmpty && _items.isEmpty) {
+        // 只有首次加载时才自动获取数据
+        _loadMoreData();
+      }
+    }
+  }
 
   @override
   void initState() {
@@ -38,12 +55,6 @@ class MaterialReceivingPageState extends State<MaterialReceivingPage> with Widge
       // 在这里处理返回的布尔值
       if (value.isNotEmpty) {
         accId = value;
-      }
-    });
-    _loadMoreData();
-    _scrollController.addListener(() {
-      if (_scrollController.position.pixels == _scrollController.position.maxScrollExtent && !_isLoading) {
-        _loadMoreData();
       }
     });
     super.initState();
@@ -92,9 +103,9 @@ class MaterialReceivingPageState extends State<MaterialReceivingPage> with Widge
                 _returnPage();
               },
             ),
-            title: const Text(
-              '转料到站-水抛',
-              style: TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.w600),
+            title: Text(
+              '转料到站-${(_args?['name'] as String? ?? "").replaceAll('转料到站', '')}', // 添加类型转换和空值处理
+              style: const TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.w600),
             ),
             elevation: 0.5,
           ),
@@ -332,7 +343,7 @@ class MaterialReceivingPageState extends State<MaterialReceivingPage> with Widge
     TableDataPara para = TableDataPara(
       plant: "DG",
       runCard: "",
-      operationList: ['319', '318'],
+      operationList: _operationList,
       page: _page + 1,
       pageSize: 15,
     );
@@ -363,11 +374,11 @@ class MaterialReceivingPageState extends State<MaterialReceivingPage> with Widge
         List<String> strList = value.split(';');
         Map<String, dynamic> form = {};
         if (strList.length == 12) {
-          form = {'OperationGroup': '水抛', 'RUN_CARD': strList[0], 'QTY': strList[1], 'TICKET_SN': strList[5], 'PLANT': "DG", 'INSPECTOR': accId};
+          form = {'OperationGroup': (_args?['name'] as String? ?? "").replaceAll('转料到站', ''), 'RUN_CARD': strList[0], 'QTY': strList[1], 'TICKET_SN': strList[5], 'PLANT': "DG", 'INSPECTOR': accId};
         } else if (strList.length == 3) {
-          form = {'OperationGroup': '水抛', 'RUN_CARD': strList[0], 'QTY': strList[1], 'TICKET_SN': strList[2], 'PLANT': "DG", 'INSPECTOR': accId};
+          form = {'OperationGroup': (_args?['name'] as String? ?? "").replaceAll('转料到站', ''), 'RUN_CARD': strList[0], 'QTY': strList[1], 'TICKET_SN': strList[2], 'PLANT': "DG", 'INSPECTOR': accId};
         } else if (strList.length == 1) {
-          form = {'OperationGroup': '水抛', 'RUN_CARD': strList[0], 'QTY': 0, 'TICKET_SN': '', 'PLANT': "DG", 'INSPECTOR': accId};
+          form = {'OperationGroup': (_args?['name'] as String? ?? "").replaceAll('转料到站', ''), 'RUN_CARD': strList[0], 'QTY': 0, 'TICKET_SN': '', 'PLANT': "DG", 'INSPECTOR': accId};
         } else {
           EasyLoading.dismiss();
           if (context.mounted) {

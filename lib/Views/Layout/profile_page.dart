@@ -39,6 +39,11 @@ class ProfilePageState extends State<ProfilePage> {
   @override
   void initState() {
     super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
     _initPackageInfo();
     _fetchUserProfile(); // 页面初始化时查询个人信息
     if (!kIsWeb) {

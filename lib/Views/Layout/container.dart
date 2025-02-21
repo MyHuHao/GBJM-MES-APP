@@ -38,6 +38,12 @@ class ContainerPageState extends State<ContainerPage> {
 
   @override
   void initState() {
+    super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
     _initPackageInfo();
     GlobalTimer().startTimer(() async {
       VersionInfo result = await context.read<VersionService>().getVersionUpdate(AppConfig.appConfig);
@@ -45,7 +51,6 @@ class ContainerPageState extends State<ContainerPage> {
         _updateApp(result.name);
       }
     });
-    super.initState();
   }
 
   @override

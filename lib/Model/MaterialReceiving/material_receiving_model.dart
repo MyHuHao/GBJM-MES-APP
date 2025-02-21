@@ -6,7 +6,7 @@ class TableDataPara {
   int pageSize;
 
   // 添加构造函数
-  TableDataPara({this.plant = "DG", this.runCard = "",this.operationList = const [], this.page = 1, this.pageSize = 15});
+  TableDataPara({this.plant = "DG", this.runCard = "", this.operationList = const [], this.page = 1, this.pageSize = 15});
 
   // 添加 toJson 方法
   Map<String, dynamic> toJson() {
@@ -137,5 +137,29 @@ class MaterialReceivingAddResult {
       errorMsg: json['errorMsg'] ?? "",
       result: json['result'] ?? "",
     );
+  }
+}
+
+class TransferMaterial {
+  String name;
+  List<String> array;
+
+  // 添加构造函数
+  TransferMaterial({this.name = "DG", this.array = const []});
+
+  // 添加fromJson工厂构造函数
+  factory TransferMaterial.fromJson(Map<String, dynamic> json) {
+    return TransferMaterial(
+      name: json['name']?.toString() ?? "DG",
+      array: json['array'] != null ? List<String>.from(json['array'].map((x) => x.toString())) : [],
+    );
+  }
+
+  // 添加 toJson 方法
+  Map<String, dynamic> toJson() {
+    return {
+      'name': name,
+      'array': array,
+    };
   }
 }
