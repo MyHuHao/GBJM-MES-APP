@@ -8,6 +8,7 @@ final Map<int, String> materialReceivingEnum = {
   503: "查询程序异常",
   201: "新增成功",
   7457: "上工序未出站",
+  9603: "不可以重复扫码到站",
   0: "上工序未出站"
 };
 

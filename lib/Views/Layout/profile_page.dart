@@ -13,6 +13,7 @@ import 'package:mesapp/Widgets/adaptive_dialog.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/foundation.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -204,16 +205,6 @@ class ProfilePageState extends State<ProfilePage> {
     });
   }
 
-  _appUpdate(String url) {
-    UpdateModel model = UpdateModel(
-      url,
-      "flutterUpdate.apk",
-      "ic_launcher",
-      '',
-    );
-    AzhonAppUpdate.update(model);
-  }
-
   Future<void> _clearForm() async {
     final tokenPreference = TokenPreference();
     await tokenPreference.clearToken();
@@ -224,13 +215,28 @@ class ProfilePageState extends State<ProfilePage> {
   }
 
   Future<void> _openUpdatePage(String name) async {
-    // 这里添加打开更新页面的逻辑，比如跳转到更新页面等
-    // 以下是简单的示例，假设跳转到更新页面
+    // 这里添加打开更新页面的逻辑
     String appUrl = AppConfig.baseUrl;
-    String url = "$appUrl/AppUpdate/DownloadUpdateApk/$name";
-    bool result = await DialogUtil.showOkCancelConfirmDialog('提示', "更新系统将自动更新 \n 当前版本: $name \n 当前下载服务器 $appUrl \n 下载URL $url \n 请点击确认更新");
+    String appName = "";
+    String version = name.split('_')[1].split('-')[0];
+    if (AppConfig.appConfig == 'Testing') {
+      appName = "test$version";
+    } else if (AppConfig.appConfig == 'Production') {
+      appName = "prod$version";
+    }
+    String downloadUrl = "$appUrl/AppUpdate/DownloadApp/$appName";
+    bool result = await DialogUtil.showOkConfirmDialog('提示', "当前有新系统版本需要更新 \n 当前版本: $name \n 当前下载服务器 $appUrl \n 下载URL $downloadUrl \n 请点击确认更新");
     if (result == true) {
-      _appUpdate(url);
+      // 跳转到浏览器下载
+      final Uri url = Uri.parse(downloadUrl).replace(
+        pathSegments: ['AppUpdate', 'DownloadApp', appName],
+      );
+      if (!await launchUrl(
+        url,
+        mode: LaunchMode.externalApplication, // 使用外部浏览器打开
+      )) {
+        throw Exception('无法打开浏览器: $url');
+      }
     }
   }
 

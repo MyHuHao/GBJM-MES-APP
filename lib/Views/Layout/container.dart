@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app_update/flutter_app_update.dart';
 import 'package:mesapp/Config/app_config.dart';
 import 'package:mesapp/Model/Login/login_model.dart';
 import 'package:mesapp/Service/Version/version_service.dart';
@@ -10,6 +9,7 @@ import 'package:mesapp/Views/Layout/profile_page.dart';
 import 'package:mesapp/Widgets/adaptive_dialog.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ContainerPage extends StatefulWidget {
   const ContainerPage({super.key});
@@ -70,16 +70,26 @@ class ContainerPageState extends State<ContainerPage> {
   Future<void> _updateApp(String name) async {
     GlobalTimer().stopTimer();
     String appUrl = AppConfig.baseUrl;
-    String url = "$appUrl/AppUpdate/DownloadUpdateApk/$name";
-    bool result = await DialogUtil.showOkConfirmDialog('提示', "更新系统将自动更新 \n 当前版本: $name \n 当前下载服务器 $appUrl \n 下载URL $url \n 请点击确认更新");
+    String appName = "";
+    String version = name.split('_')[1].split('-')[0];
+    if (AppConfig.appConfig == 'Testing') {
+      appName = "test$version";
+    } else if (AppConfig.appConfig == 'Production') {
+      appName = "prod$version";
+    }
+    String downloadUrl = "$appUrl/AppUpdate/DownloadApp/$appName";
+    bool result = await DialogUtil.showOkConfirmDialog('提示', "当前有新系统版本需要更新 \n 当前版本: $name \n 当前下载服务器 $appUrl \n 下载URL $downloadUrl \n 请点击确认更新");
     if (result == true) {
-      UpdateModel model = UpdateModel(
-        url,
-        "flutterUpdate.apk",
-        "ic_launcher",
-        '',
+      // 跳转到浏览器下载
+      final Uri url = Uri.parse(downloadUrl).replace(
+        pathSegments: ['AppUpdate', 'DownloadApp', appName],
       );
-      AzhonAppUpdate.update(model);
+      if (!await launchUrl(
+        url,
+        mode: LaunchMode.externalApplication, // 使用外部浏览器打开
+      )) {
+        throw Exception('无法打开浏览器: $url');
+      }
     }
   }
 
@@ -106,8 +116,10 @@ class ContainerPageState extends State<ContainerPage> {
             ],
             currentIndex: _selectedIndex,
             iconSize: 20,
-            selectedItemColor: Colors.blue, // 选中时的颜色
-            unselectedItemColor: Colors.black, // 未选中时的颜色
+            selectedItemColor: Colors.blue,
+            // 选中时的颜色
+            unselectedItemColor: Colors.black,
+            // 未选中时的颜色
             onTap: (int index) {
               setState(() {
                 _selectedIndex = index;
