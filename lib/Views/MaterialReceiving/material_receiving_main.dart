@@ -413,11 +413,9 @@ class MaterialReceivingPageState extends State<MaterialReceivingPage> with Widge
           var result = res.result;
           if (result.isNotEmpty) {
             EasyLoading.showToast('到料成功,剩余天数：$result');
-            return;
           } else {
             EasyLoading.showToast('到料成功');
           }
-
           _valueController.clear();
           if (!_valueFocusNode.hasFocus) {
             _valueFocusNode.requestFocus();
