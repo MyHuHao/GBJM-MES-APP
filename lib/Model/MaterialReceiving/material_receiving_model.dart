@@ -135,7 +135,7 @@ class MaterialReceivingAddResult {
     return MaterialReceivingAddResult(
       code: json['code'],
       errorMsg: json['errorMsg'] ?? "",
-      result: json['result'] ?? "",
+      result: json['result'].toString() ?? "",
     );
   }
 }
