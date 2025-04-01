@@ -412,7 +412,14 @@ class MaterialReceivingPageState extends State<MaterialReceivingPage> with Widge
         } else {
           var result = res.result;
           if (result.isNotEmpty) {
-            EasyLoading.showToast('到料成功,剩余天数：$result');
+            // 创建一个枚举映射
+            Map<String, String> resultEnum = {
+              '-1': '存档成功,急单',
+              '0': '剩于天数小于等于0天',
+              '1': '剩于天数1-5天',
+              '2': '剩于天数大于5天',
+            };
+            EasyLoading.showToast(resultEnum[result] ?? '到料成功');
           } else {
             EasyLoading.showToast('到料成功');
           }
